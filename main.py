@@ -1,165 +1,127 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
 import gifos
+import time  # для пауз, если вдруг понадобится
 
-FONT_FILE_LOGO = "./fonts/vtks-blocketo.regular.ttf"
-# FONT_FILE_BITMAP = "./fonts/ter-u14n.pil"
-FONT_FILE_BITMAP = "./fonts/gohufont-uni-14.pil"
-FONT_FILE_TRUETYPE = "./fonts/IosevkaTermNerdFont-Bold.ttf"
-FONT_FILE_MONA = "./fonts/Inversionz.otf"
+# ────────────────────────────────────────────────
+#                     ШРИФТЫ
+# ────────────────────────────────────────────────
+FONT_LOGO       = "./fonts/vtks-blocketo.regular.ttf"
+FONT_BITMAP     = "./fonts/gohufont-uni-14.pil"
+FONT_MONO       = "./fonts/IosevkaTermNerdFont-Bold.ttf"
+FONT_Mona       = "./fonts/Inversionz.otf"
+FONT_BIG_GLITCH = "./fonts/Orbitron-Black.ttf"         # если есть, выглядит cyber-круто
 
+def glitch_line(text, row, glitch_count=4):
+    for _ in range(glitch_count):
+        t.gen_text(text, row, color="\x1b[90;100m", contin=True)
+        t.gen_text(text, row, color="\x1b[0m", contin=True)
+        t.sleep_frames(2)
 
 def main():
-    t = gifos.Terminal(800, 500, 15, 15, FONT_FILE_BITMAP, 15)
-    t.set_fps(15)
-    t.set_prompt("\x1b[0;91mmeow\x1b[0m@\x1b[0;93mmafia ~> \x1b[0m")
-    t.gen_text("hacking into the meowframe ", 1, contin=True)
-    t.gen_typing_text(".....", 1, contin=True)
+    t = gifos.Terminal(960, 540, 16, 16, FONT_BITMAP, 16)
+    t.set_fps(18)
+    t.set_prompt("\x1b[0;95mPAJIRO\x1b[0m@\x1b[38;5;208mvoid-nyx ~# \x1b[0m")
 
-    t.gen_prompt(3)
-    prompt_col = t.curr_col
+    # ──────── BOOT SEQUENCE ────────
+    t.gen_text("\x1b[38;5;196mNEKO-MAFIA CORE v13.3.7 — booting...\x1b[0m", 1, count=4)
+    t.gen_typing_text(".............", 1, speed=0.8, contin=True)
+    t.gen_text(" \x1b[38;5;82m[OK]\x1b[0m", 1)
+
+    t.gen_text("\x1b[38;5;93mInjecting quantum yarn payload...", 3)
+    t.gen_typing_text("  .....", 3, contin=True)
+    t.gen_text(" \x1b[38;5;87m[SCRATCHED]\x1b[0m", 3)
+
+    t.gen_text("\x1b[38;5;208mChewing backbone fiber cables...", 4)
+    t.gen_text(" \x1b[38;5;196m[CHOMPED 99%]\x1b[0m", 4)
+
+    t.gen_text("\x1b[38;5;135mEstablishing darknet tuna tunnel...", 5, contin=True)
+    t.gen_typing_text("...", 5)
+    t.gen_text(" \x1b[38;5;46m[CONNECTED — 42069 ms latency]\x1b[0m", 5)
+
+    t.gen_prompt(7)
     t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mmobilize meow-mafi", 3, contin=True)
-    t.delete_row(3, prompt_col)  # simulate syntax highlighting
-    t.gen_text("\x1b[92mmobilize meow-mafia\x1b[0m", 3, count=3, contin=True)
-    t.toggle_show_cursor(False)
-    t.gen_typing_text("...", 4, contin=True)
-    t.gen_text(" \x1b[96mmobilized\x1b[0m", 4, contin=True)
-    t.gen_typing_text("...", 5, contin=True)
-    t.gen_text(" \x1b[96mserver racks scratched\x1b[0m", 5, contin=True)
-    t.gen_typing_text("...", 6, contin=True)
-    t.gen_text(" \x1b[96mwires chewed\x1b[0m", 6, contin=True)
-    t.gen_text("\x1b[96mOK meow mafia on standby\x1b[0m", 7)
 
+    # ──────── FAKE HACKING PHASE ────────
+    t.gen_typing_text("\x1b[38;5;196mcrack-pajiro-keygen --ultra", 7, contin=True)
+    t.delete_row(7, t.curr_col)
+    t.gen_text("\x1b[38;5;82mcrack-pajiro-keygen --ultra\x1b[0m", 7, count=4, contin=True)
 
-    t.gen_prompt(8)
-    t.clone_frame(10)
-    prompt_col = t.curr_col
-    t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mlogi", 8, contin=True)
-    t.delete_row(8, prompt_col)
-    t.gen_text("\x1b[92mlogin\x1b[0m", 8, count=3, contin=True)
-    t.gen_text(" \x1b[91mlogin: Authentication Failed", 8)
+    t.gen_text(" ", 8)
+    lines = gifos.effects.text_decode_effect_lines("0xPAJIRO-ν1.337 ACCESS GRANTED", 2, glitch_prob=0.4)
+    for i, line in enumerate(lines):
+        t.gen_text(line, 8 + i, color="\x1b[38;5;201m")
 
-    t.gen_prompt(9)
-    t.clone_frame(10)
-    prompt_col = t.curr_col
-    t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mdeploy kitty-hac", 9, contin=True)
-    t.delete_row(9, prompt_col)  # simulate syntax highlighting
-    t.gen_text("\x1b[92mdeploy kitty-hack\x1b[0m", 9, count=3, contin=True)
-
-    lines = gifos.effects.text_decode_effect_lines("decrypted password", 1)
-
-    for i in range(len(lines)):
-        if i == len(lines)-1:
-            t.gen_text("\x1b[92mdecrypted password\x1b[0m", 10 + i)
-        else:
-            t.gen_text(lines[i], 10 + i)
-
-    cur_row = t.curr_row
-    t.gen_prompt(cur_row, count=5)
-    prompt_col = t.curr_col
-    t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mlogi", cur_row, contin=True)
-    t.delete_row(cur_row, prompt_col)  # simulate syntax highlighting
-    t.gen_text("\x1b[92mlogin\x1b[0m", cur_row, count=3, contin=True)
+    t.sleep_frames(18)
     t.clear_frame()
 
-    t.gen_text("Initiating Login Sequence ", 1, contin=True)
-    t.gen_typing_text(".....", 1, contin=True)
-    t.gen_text("\x1b[96m", 1, count=0, contin=True)  # buffer to be removed
-    t.set_font(FONT_FILE_LOGO, 66)
-    # t.toggle_show_cursor(True)
-    os_logo_text = "meow"
-    mid_row = (t.num_rows + 1) // 2
-    mid_col = (t.num_cols - len(os_logo_text) + 1) // 2
-    effect_lines = gifos.effects.text_scramble_effect_lines(
-        os_logo_text, 3, include_special=False
-    )
-    for i in range(len(effect_lines)):
-        t.delete_row(mid_row + 1)
-        t.gen_text(effect_lines[i], mid_row + 1, mid_col + 1)
+    # ──────── BIG LOGO + GLITCH ────────
+    t.set_font(FONT_LOGO, 88)
+    logo = "PAJIRO"
+    mid_r = t.num_rows // 2 - 2
+    mid_c = (t.num_cols - len(logo) * 4) // 2
 
-    t.set_font(FONT_FILE_BITMAP, 15)
+    for frame in range(5):
+        t.clear_frame()
+        glitch_line(logo, mid_r, glitch_count=6 - frame)
+        t.sleep_frames(3)
+
+    t.set_font(FONT_BITMAP, 16)
     t.clear_frame()
-    t.clone_frame(5)
+    t.clone_frame(8)
 
-    t.toggle_show_cursor(False)
-    t.gen_text("\x1b[93mmeowOS v1.0.25 (tty1)\x1b[0m", 1, count=5)
-    t.gen_text("welcome to meow OS! please keep ur password safe :)", 3)
-    time_now = datetime.now(ZoneInfo("Europe/London")).strftime(
-        "%a %b %d %I:%M:%S %p %Z %Y"
-    )
-    t.gen_text(f"Last login: {time_now} on tty1", 5)
+    # ──────── WELCOME TO PAJIRO-OS ────────
+    t.gen_text("\x1b[38;5;207m✦ pajiroOS v0.13 — kitten edition ✦\x1b[0m", 1, count=5)
+    t.gen_text("\x1b[38;5;135mkeep your yarnball password safe nya~ ;3\x1b[0m", 3)
 
-    t.gen_prompt(6)
-    t.clone_frame(10)
-    prompt_col = t.curr_col
+    now = datetime.now(ZoneInfo("Europe/London")).strftime("%a %b %d %I:%M:%S %p %Z %Y")
+    t.gen_text(f"\x1b[38;5;208mLast scratch: {now} from claw-tty0\x1b[0m", 5)
+
+    t.gen_prompt(7)
+    t.clone_frame(12)
+
+    # ──────── PAJIROFETCH ────────
     t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mclea", 6, contin=True)
-    t.delete_row(6, prompt_col)  # simulate syntax highlighting
-    t.gen_text("\x1b[92mclear\x1b[0m", 6, count=3, contin=True)
+    t.gen_typing_text("\x1b[38;5;196mpfetch", 7, contin=True)
+    t.delete_row(7, t.curr_col)
+    t.gen_text("\x1b[38;5;82mpfetch -c nya\x1b[0m", 7, count=4)
 
-    t.clear_frame()
-    user_details_lines = f"""
-    \x1b[30;101mviolin@GitHub\x1b[0m
-    --------------
-    \x1b[96mOS:      \x1b[93mmeow OS (beta [alpha] - early access)\x1b[0m
-    \x1b[96mhost:    \x1b[93mthe void\x1b[0m
-    \x1b[96mkernel:  \x1b[93mramen and pizza\x1b[0m
-    \x1b[96muptime:  \x1b[93mtoo long\x1b[0m
-    \x1b[96mIDE:     \x1b[93mnotepad++\x1b[0m
-
-    \x1b[30;101mcontact:\x1b[0m
-    --------------
-    \x1b[96mwebsite: \x1b[93mkyaru.cloud\x1b[0m
-    \x1b[96mdiscord: \x1b[93mrusthater62 \x1b[94m#visual basic\x1b[0m
+    t.set_font(FONT_Mona, 18)
+    mona_art = r"""
+\x1b[38;5;93m      /_/\      \x1b[38;5;201m  ⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⠀⠀⠀⠀
+\x1b[38;5;93m     ( o.o )     \x1b[38;5;201m ⠀⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣶⣄⠀
+\x1b[38;5;93m      > ^ <      \x1b[38;5;201m⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀
+\x1b[38;5;208m   PAJIRO NYA~   \x1b[38;5;201m⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷
+                  \x1b[38;5;201m⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+                  \x1b[38;5;201m⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿
+                  \x1b[38;5;135m⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁
+                     \x1b[38;5;93m⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋
+                        \x1b[38;5;208m⠉⠛⠛⠛⠛⠛⠛⠉
     """
-    t.gen_prompt(1)
-    prompt_col = t.curr_col
-    t.clone_frame(10)
-    t.toggle_show_cursor(True)
-    t.gen_typing_text("\x1b[91mfetch.s", 1, contin=True)
-    t.delete_row(1, prompt_col)
-    t.gen_text("\x1b[92mfetch.sh\x1b[0m", 1, contin=True)
-    t.gen_typing_text(" -u violin", 1, contin=True)
 
-    t.set_font(FONT_FILE_MONA, 16, 0)
-    t.toggle_show_cursor(False)
-    monaLines = r"""
-    \x1b[49m     \x1b[90;100m}}\x1b[49m     \x1b[90;100m}}\x1b[0m
-    \x1b[49m    \x1b[90;100m}}}}\x1b[49m   \x1b[90;100m}}}}\x1b[0m
-    \x1b[49m    \x1b[90;100m}}}}}\x1b[49m \x1b[90;100m}}}}}\x1b[0m
-    \x1b[49m   \x1b[90;100m}}}}}}}}}}}}}\x1b[0m
-    \x1b[49m   \x1b[90;100m}}}}}}}}}}}}}}\x1b[0m
-    \x1b[49m   \x1b[90;100m}}\x1b[37;47m}}}}}}}\x1b[90;100m}}}}}\x1b[0m
-    \x1b[49m  \x1b[90;100m}}\x1b[37;47m}}}}}}}}}}\x1b[90;100m}}}\x1b[0m
-    \x1b[49m  \x1b[90;100m}}\x1b[37;47m}\x1b[90;100m}\x1b[37;47m}}}}}\x1b[90;100m}\x1b[37;47m}}\x1b[90;100m}}}}\x1b[0m
-    \x1b[49m  \x1b[90;100m}\x1b[37;47m}}\x1b[90;100m}\x1b[37;47m}}}}}\x1b[90;100m}\x1b[37;47m}}}\x1b[90;100m}}}\x1b[0m
-    \x1b[90;100m}}}\x1b[37;47m}}}}\x1b[90;100m}}}\x1b[37;47m}}}}}\x1b[90;100m}}}}\x1b[0m
-    \x1b[49m  \x1b[90;100m}\x1b[37;47m}}}}}\x1b[90;100m}}\x1b[37;47m}}}}}\x1b[90;100m}}}\x1b[0m
-    \x1b[49m \x1b[90;100m}}\x1b[37;47m}}}}}}}}}}}}\x1b[90;100m}}}\x1b[0m
-    \x1b[90;100m}\x1b[49m  \x1b[90;100m}}\x1b[37;47m}}}}}}}}\x1b[90;100m}}}\x1b[49m  \x1b[90;100m}\x1b[0m
-    \x1b[49m        \x1b[90;100m}}}}}\x1b[0m
-    \x1b[49m       \x1b[90;100m}}}}}}}\x1b[0m
-    \x1b[49m       \x1b[90;100m}}}}}}}}\x1b[0m
-    \x1b[49m      \x1b[90;100m}}}}}}}}}}\x1b[0m
-    \x1b[49m     \x1b[90;100m}}}}}}}}}}}\x1b[0m
-    \x1b[49m     \x1b[90;100m}}}}}}}}}}}}\x1b[0m
-    \x1b[49m     \x1b[90;100m}}\x1b[49m \x1b[90;100m}}}}}}\x1b[49m \x1b[90;100m}}\x1b[0m
-    \x1b[49m        \x1b[90;100m}}}}}}}\x1b[0m
-    \x1b[49m         \x1b[90;100m}}}\x1b[49m \x1b[90;100m}}\x1b[0m
+    t.gen_text(mona_art, 9, 2)
+
+    # ──────── INFO BLOCK ────────
+    fetch_block = f"""
+\x1b[38;5;93m                  ┌─────────────────────────────┐
+\x1b[38;5;207m   user          │ \x1b[38;5;201mpajiro                      \x1b[38;5;93m│
+\x1b[38;5;93m                  ├─────────────────────────────┤
+\x1b[38;5;207m   os            │ \x1b[38;5;87mpajiroOS kitten-unstable    \x1b[38;5;93m│
+\x1b[38;5;207m   kernel        │ \x1b[38;5;208myarn 6.9.420-purr           \x1b[38;5;93m│
+\x1b[38;5;207m   uptime        │ \x1b[38;5;226m69 days, 13 scratches       \x1b[38;5;93m│
+\x1b[38;5;207m   shell         │ \x1b[38;5;135mfish --with-nya-flags       \x1b[38;5;93m│
+\x1b[38;5;207m   terminal      │ \x1b[38;5;82mkitty --blurry              \x1b[38;5;93m│
+\x1b[38;5;207m   theme         │ \x1b[38;5;201mCatppuccin Mocha + blood    \x1b[38;5;93m│
+\x1b[38;5;93m                  └─────────────────────────────┘
+\x1b[38;5;208m   links » \x1b[38;5;87mkyaru.cloud  •  pajiro#0666  •  nya.cx
     """
-    t.gen_text(monaLines, 10)
 
-    t.set_font(FONT_FILE_BITMAP)
-    t.gen_text(user_details_lines, 2, 35, count=5, contin=True)
-    t.clone_frame(60)
-    
-    t.save_frame("screenshot.png")
-    t.gen_gif()
+    t.gen_text(fetch_block, 9, 38, contin=True)
+    t.clone_frame(90)
+
+    t.save_frame("pajiro_screenshot.png")
+    t.gen_gif("pajiro_hack.mp4")   # если хочешь и видео-вариант
+
 
 if __name__ == "__main__":
     main()
